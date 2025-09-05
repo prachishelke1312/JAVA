@@ -1,0 +1,163 @@
+INPUT:
+package ATM;
+
+import java.util.Scanner;
+
+class ATM {
+    private double balance;
+
+    public ATM(double initialBalance) {
+        if (initialBalance < 0) {
+            throw new IllegalArgumentException("Initial balance cannot be negative.");
+        }
+        this.balance = initialBalance;
+    }
+
+    public void checkBalance() {
+        System.out.printf("Your current balance is: ₹%.2f%n", balance);
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be positive!");
+        }
+        balance += amount;
+        System.out.printf("Successfully deposited ₹%.2f%n", amount);
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive!");
+        }
+        if (amount > balance) {
+            throw new ArithmeticException("Insufficient funds!");
+        }
+        balance -= amount;
+        System.out.printf("Successfully withdrew ₹%.2f%n", amount);
+    }
+}
+
+public class 
+ {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ATM atm = new ATM(5000.00); // Initial balance
+        boolean running = true;
+
+        System.out.println("=== Welcome to Java ATM Simulation ===");
+
+        while (running) {
+            System.out.println("\nChoose an option:");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            String line = sc.nextLine().trim();
+            try {
+                int choice = Integer.parseInt(line);
+
+                switch (choice) {
+                    case 1:
+                        atm.checkBalance();
+                        break;
+
+                    case 2:
+                        System.out.print("Enter amount to deposit: ");
+                        String depStr = sc.nextLine().trim();
+                        double depositAmount = Double.parseDouble(depStr);
+                        atm.deposit(depositAmount);
+                        break;
+
+                    case 3:
+                        System.out.print("Enter amount to withdraw: ");
+                        String witStr = sc.nextLine().trim();
+                        double withdrawAmount = Double.parseDouble(witStr);
+                        atm.withdraw(withdrawAmount);
+                        break;
+
+                    case 4:
+                        System.out.println("Thank you for using ATM. Goodbye!");
+                        running = false;
+                        break;
+
+                    default:
+                        System.out.println("Invalid menu choice! Please enter 1-4.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Invalid input. Please enter numeric values only!");
+            } catch (IllegalArgumentException | ArithmeticException e) {
+                System.out.println("Error: " + e.getMessage());
+            } finally {
+                if (running) {
+                    System.out.println("Transaction cycle completed.\n");
+                }
+            }
+        }
+
+        sc.close();
+    }
+}
+
+OUTPUT:
+Enter Account Number: 1234
+Enter Name: PRACHI
+Enter Balance: 10000
+Enter Interest Rate: 5
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 1
+Account Holder: PRACHI
+Account Number: 1234
+Balance: ₹10000.0
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 2
+Enter amount to deposit: 4000
+₹4000.0 deposited successfully.
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 3
+Enter amount to withdraw: 1000
+₹1000.0 withdrawn successfully.
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 1
+Account Holder: PRACHI
+Account Number: 1234
+Balance: ₹13000.0
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 6
+Exiting... Thank you!
