@@ -1,0 +1,209 @@
+INPUT:
+package Bank;
+
+import java.util.Scanner;
+
+// Superclass
+class Bankac {
+    String acno;
+    double balance;
+    String name;
+
+    Bankac() {
+        acno = null;
+        balance = 0;
+        name = null;
+    }
+
+    Bankac(String accountno, double balance, String name) {
+        this.acno = accountno;
+        this.balance = balance;
+        this.name = name;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("₹" + amount + " deposited successfully.");
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            System.out.println("₹" + amount + " withdrawn successfully.");
+        } else {
+            System.out.println("Insufficient balance");
+        }
+    }
+
+    public void showBalance() {
+        System.out.println("Current Balance: ₹" + balance);
+    }
+
+    public void displayDetails() {
+        System.out.println("Account Holder: " + name);
+        System.out.println("Account Number: " + acno);
+        System.out.println("Balance: ₹" + balance);
+    }
+}
+
+// Subclass
+public class SavingAccount extends Bankac {
+    double rate;
+
+    SavingAccount() {
+        super();
+        rate = 0;
+    }
+
+    SavingAccount(String accountno, double balance, String name, double rate) {
+        super(accountno, balance, name);
+        this.rate = rate;
+    }
+
+    public double calInterest() {
+        return (balance * rate * 1) / 100;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input details once
+        System.out.print("Enter Account Number: ");
+        String accountno = sc.nextLine();
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Balance: ");
+        double balance = sc.nextDouble();
+
+        System.out.print("Enter Interest Rate: ");
+        double rate = sc.nextDouble();
+
+        // Create SavingAccount object
+        SavingAccount sa1 = new SavingAccount(accountno, balance, name, rate);
+
+        int choice;
+        do {
+            // Display menu
+            System.out.println("\nMenu");
+            System.out.println("1. Display Account Details");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Show Balance");
+            System.out.println("5. Calculate Interest");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            // Handle menu options
+            switch (choice) {
+                case 1:
+                    sa1.displayDetails();
+                    break;
+
+                case 2:
+                    System.out.print("Enter amount to deposit: ");
+                    double depAmount = sc.nextDouble();
+                    sa1.deposit(depAmount);
+                    break;
+
+                case 3:
+                    System.out.print("Enter amount to withdraw: ");
+                    double withAmount = sc.nextDouble();
+                    sa1.withdraw(withAmount);
+                    break;
+
+                case 4:
+                    sa1.showBalance();
+                    break;
+
+                case 5:
+                    double interest = sa1.calInterest();
+                    System.out.println("Calculated Interest for 1 year: ₹" + interest);
+                    break;
+
+                case 6:
+                    System.out.println("Exiting... Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 6);
+
+        sc.close();
+    }
+}
+
+OUTPUT:
+Enter Account Number: 1234
+Enter Name: PRACHI
+Enter Balance: 100000
+Enter Interest Rate: 5
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 1
+Account Holder: PRACHI
+Account Number: 1234
+Balance: ₹100000.0
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 2
+Enter amount to deposit: 20000
+₹20000.0 deposited successfully.
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 3
+Enter amount to withdraw: 50000
+₹50000.0 withdrawn successfully.
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 5
+Calculated Interest for 1 year: ₹3500.0
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 1
+Account Holder: PRACHI
+Account Number: 1234
+Balance: ₹70000.0
+
+Menu
+1. Display Account Details
+2. Deposit
+3. Withdraw
+4. Show Balance
+5. Calculate Interest
+6. Exit
+Enter your choice: 6
+Exiting... Thank you!
